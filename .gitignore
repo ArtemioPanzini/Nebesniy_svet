@@ -3,7 +3,4 @@
 *.log
 __pycache__/
 *.txt
-common_log_artelamp.txt
-common_log_Stilfort.txt
-common_log.txt
-common_log_lightstar.txt
+!requirements.txt

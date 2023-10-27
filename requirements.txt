@@ -1,0 +1,4 @@
+requests
+charset_normalizer
+cryptography
+certifi
