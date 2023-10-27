@@ -1,5 +1,4 @@
 import sys
-import datetime
 import time
 
 from scr.Artelamp import Artelamp_main as ArtlampMain
