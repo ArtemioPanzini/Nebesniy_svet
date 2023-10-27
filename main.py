@@ -49,7 +49,6 @@ def main():
     try:
         StilfortMain.main()
         print(f'StilfortApiMain success, ждём 60c')
-        time.sleep(60)
     except Exception as e:
         print(e)
         print(f'shit, ждём 120c')

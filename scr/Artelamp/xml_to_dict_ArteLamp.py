@@ -23,7 +23,7 @@ def read_txt_to_list(file_path):
     
 def main():
     script_directory = os.path.dirname(__file__)
-    download_folder = os.path.join(script_directory,'../../data/ArteLamp/')
+    download_folder = os.path.join(script_directory,'../../data/Artelamp/')
     file_path = os.path.join(download_folder, 'Artelamp.xml')
     file_path_debug = os.path.join(download_folder, 'not_allow_Artlamp.txt')
 
