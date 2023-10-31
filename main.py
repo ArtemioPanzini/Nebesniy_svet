@@ -46,13 +46,13 @@ def main():
     except Exception as e:
         print(e)
         
-    """try:
+    try:
         StilfortMain.main()
         print(f'StilfortApiMain success, ждём 60c')
     except Exception as e:
         print(e)
         print(f'shit, ждём 120c')
-        time.sleep(120) """ 
+        time.sleep(120)
     
 
         
