@@ -45,15 +45,15 @@ def main():
         # Проверяем, находится ли текущее время в интервале 19:55 - 23:59 или 00:00 - 08:25
         if (time_interval1_start <= current_time <= time_interval1_end) or (time_interval2_start <= current_time <= time_interval2_end):
                 # Если текущее время находится в интервале, устанавливаем множитель цены 0.9
-            price_multiplier = 0.899
+            price_multiplier = 0.9
         else:
             # В других случаях множитель цены остается 1.0
-            price_multiplier = 0.899 
+            price_multiplier = 0.9 
 
 
         now = date.today()
         if now.weekday() in [5,6]:
-            price_multiplier = 0.899
+            price_multiplier = 0.9
 
         # Поиск всех элементов <offer>
         for offer_element in root.findall('.//offer'):
