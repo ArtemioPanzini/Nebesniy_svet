@@ -120,7 +120,7 @@ async def main():
         # Проверяем, находится ли текущее время в интервале 18:55 - 23:59 или 00:00 - 08:25
     if (time_interval1_start <= current_time <= time_interval1_end):
                 # Если текущее время находится в интервале, устанавливаем множитель цены 0.9
-        message_dict = await make_message_for_tg(list_success_for_telegram, 'Рома')
+        message_dict = await make_message_for_tg(list_success_for_telegram, 'Аваг')
         await send_messages_to_users(message_dict)  
     else:
             # В других случаях множитель цены остается 1.0
