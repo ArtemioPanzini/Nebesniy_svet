@@ -114,8 +114,8 @@ async def main():
     except Exception as e:
         print(e)
         
-    time_interval1_start = time(12, 31)
-    time_interval1_end = time(12, 46)
+    time_interval1_start = time(9, 45)
+    time_interval1_end = time(10, 00)
     current_time = datetime.now().time()
         # Проверяем, находится ли текущее время в интервале 18:55 - 23:59 или 00:00 - 08:25
     if (time_interval1_start <= current_time <= time_interval1_end):
