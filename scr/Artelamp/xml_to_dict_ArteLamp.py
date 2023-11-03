@@ -56,7 +56,7 @@ def main():
             price_multiplier = 0.9
         else:
             # В других случаях множитель цены остается 0.9!!!
-            price_multiplier = 0.899  
+            price_multiplier = 1  
         
         now = date.today()
         if now.weekday() in [5,6]:
