@@ -3,6 +3,8 @@ import time
 import asyncio
 import telegram
 from datetime import datetime
+from datetime import time as time_now
+
 
 from scr.Artelamp import Artelamp_main as ArtlampMain
 from scr.Lightstar import Lightstar_main as LightstarMain
@@ -114,8 +116,8 @@ async def main():
     except Exception as e:
         print(e)
         
-    time_interval1_start = time(9, 45)
-    time_interval1_end = time(10, 00)
+    time_interval1_start = time_now(9, 45)
+    time_interval1_end = time_now(10, 00)
     current_time = datetime.now().time()
         # Проверяем, находится ли текущее время в интервале 18:55 - 23:59 или 00:00 - 08:25
     if (time_interval1_start <= current_time <= time_interval1_end):
