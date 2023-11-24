@@ -3,22 +3,17 @@ import json
 import threading
 import time
 import re
-
-from logs import log_file_generator
+from modules.Nebesniy_svet.scr.Artelamp import xml_to_dict_ArteLamp
+from modules.Nebesniy_svet.logs import log_file_generator
 common_logger = log_file_generator.common_logger
+import config
 
-import xml_to_dict_ArteLamp
-
-
-# maytoni 68406114     763847
-# freya 71927276       799733
-# technical 71951954   800166
 
 def send_data_batch_price(prices_data):
     
     headers_oauth = {"Authorization": "Bearer y0_AgAAAABW45BlAApomAAAAADrXWqYcge3WjPZQj2l-zlBmGYZGZAehy0"}
 
-    Base_url = "https://api.partner.market.yandex.ru/businesses/79508170/offer-prices/updates"
+    base_url = "https://api.partner.market.yandex.ru/businesses/79508170/offer-prices/updates"
     
     # Переменные для управления отправкой запросов
     batch_size = 250
@@ -32,8 +27,7 @@ def send_data_batch_price(prices_data):
             print("Достигнут лимит запросов. Ожидание...")  
             time.sleep(60)  # Подождать 1 минуту
             requests_sent_in_minute = 0  # Сбросить счетчик
-        #print(f'{batch[83]}, {batch[213]}')
-        response = requests.post(Base_url, headers=headers_oauth, json={"offers": batch})
+        response = requests.post(base_url, headers=headers_oauth, json={"offers": batch})
         response_data = response.json()
         
         requests_sent_in_minute += len(batch)  # Увеличить счетчик запросов
@@ -50,11 +44,11 @@ def send_data_batch_price(prices_data):
                 print(batch[int(match.group(1))])
 
 
-def send_data_batch_stock(stocks_data, shop_name, warehouseID):
+def send_data_batch_stock(stocks_data, shop_name, warehouse_api_id):
     
-    headers_oauth = {"Authorization": "Bearer y0_AgAAAABW45BlAApomAAAAADrXWqYcge3WjPZQj2l-zlBmGYZGZAehy0"}
+    headers_oauth = config.headers
 
-    Base_url = f"https://api.partner.market.yandex.ru/campaigns/{warehouseID}/offers/stocks"
+    base_url = f"https://api.partner.market.yandex.ru/campaigns/{warehouse_api_id}/offers/stocks"
     
     # Переменные для управления отправкой запросов
     batch_size = 250
@@ -69,8 +63,7 @@ def send_data_batch_stock(stocks_data, shop_name, warehouseID):
             print("Достигнут лимит запросов. Ожидание...")  
             time.sleep(60)  # Подождать 1 минуту
             requests_sent_in_minute = 0  # Сбросить счетчик
-        #print(f'{batch[83]}, {batch[213]}')
-        response = requests.put(Base_url, headers=headers_oauth, json={"skus": batch})
+        response = requests.put(base_url, headers=headers_oauth, json={"skus": batch})
         response_data = response.json()
         
         requests_sent_in_minute += len(batch)  # Увеличить счетчик запросов
@@ -83,21 +76,21 @@ def send_data_batch_stock(stocks_data, shop_name, warehouseID):
             common_logger.info(f'{json.dumps(response_data, indent=2)} {requests_sent_in_minute}')
             errors = response_data["errors"]
             for error in errors:
-                message_error = error["message"]
-                match = re.search(r'\[(\d+)\]', message_error)
-                print(batch[int(match.group(1))])
+                print(f'{json.dumps(response_data, indent=2)} {requests_sent_in_minute}')
+
 
 def main():
-    prices_data_Artelamp, stocks_data_Artelamp = xml_to_dict_ArteLamp.main()
+    prices_data_artelamp, stocks_data_artelamp = xml_to_dict_ArteLamp.main()
 
-    thread_prices = threading.Thread(target=send_data_batch_price, args=(prices_data_Artelamp,))
-    thread_stocks_Artelamp = threading.Thread(target=send_data_batch_stock, args=(stocks_data_Artelamp, "Artelamp" , 73680523))
+    thread_prices = threading.Thread(target=send_data_batch_price,
+                                     args=(prices_data_artelamp,))
 
+    thread_stocks_artelamp = threading.Thread(target=send_data_batch_stock,
+                                              args=(stocks_data_artelamp,
+                                                    "Artelamp", 78527993))
 
-    
     thread_prices.start()
-    thread_stocks_Artelamp.start()
-
+    thread_stocks_artelamp.start()
 
     thread_prices.join()
-    thread_stocks_Artelamp.join()
+    thread_stocks_artelamp.join()

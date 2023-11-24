@@ -1,10 +1,6 @@
-import os
-import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '.')) ) #Добавляем корневую папку main для path append
+from modules.Nebesniy_svet.scr.Maytoni import download_xml_maytoni
+from modules.Nebesniy_svet.scr.Maytoni import send_api_batch
 
-
-import download_xml_maytoni
-import send_api_batch
 
 def main():
     download_xml_maytoni.main()

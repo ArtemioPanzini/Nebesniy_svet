@@ -1,9 +1,6 @@
-import os
-import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '.')) ) #Добавляем корневую папку main для path append
+from modules.Nebesniy_svet.scr.Stilfort import download_xml_Stilfort
+from modules.Nebesniy_svet.scr.Stilfort import send_api_batch_Stilfort
 
-import download_xml_Stilfort
-import send_api_batch_Stilfort
 
 def main():
     download_xml_Stilfort.main()

@@ -1,10 +1,11 @@
 import requests
 import os
 import shutil
-from datetime import datetime 
+from datetime import datetime
+from modules.Nebesniy_svet.logs import log_file_generator
 
-from logs import log_file_generator
 common_logger = log_file_generator.common_logger
+
 
 def move_file_if_exists(source_path, target_directory):
     if os.path.isfile(source_path):
@@ -13,7 +14,6 @@ def move_file_if_exists(source_path, target_directory):
         timestamp = datetime.now().strftime("%m_%d-%H-%M-%S")
         new_file_name = f"{timestamp}_{file_name}"
 
-        
         # Полный путь к новому местоположению файла в целевой директории
         new_file_path = os.path.join(target_directory, new_file_name)
 
@@ -22,10 +22,12 @@ def move_file_if_exists(source_path, target_directory):
 
         common_logger.info(f'Файл перемещен в {new_file_path}')
 
+
 def delete_file_if_exist(source_path):
     if os.path.isfile(source_path):
         os.remove(source_path)
         common_logger.info(f'Файл удален: {source_path}')
+
 
 def download_file(file_url, target_path):
     response = requests.get(file_url)
@@ -39,6 +41,7 @@ def download_file(file_url, target_path):
         common_logger.info(f'Файл скачан и сохранен в {target_path}')
     else:
         common_logger.error(f'Не удалось скачать файл. Код статуса: {response.status_code}')
+
 
 def main():
     # URL файла для загрузки
@@ -56,6 +59,5 @@ def main():
     # Полный путь к файлу для сохранения
     file_path = os.path.join(download_folder, file_name)
 
-    #move_file_if_exists(file_path, target_directory)
     delete_file_if_exist(file_path)
     download_file(file_url, file_path)

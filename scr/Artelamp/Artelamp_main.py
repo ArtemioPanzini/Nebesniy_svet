@@ -1,10 +1,6 @@
-import os
-import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '.')) ) #Добавляем корневую папку main для path append
+from modules.Nebesniy_svet.scr.Artelamp import download_xml_ArteLamp
+from modules.Nebesniy_svet.scr.Artelamp import send_api_batch_ArteLamp
 
-
-import download_xml_ArteLamp
-import send_api_batch_ArteLamp
 
 def main():
     download_xml_ArteLamp.main()

@@ -1,10 +1,6 @@
-import os
-import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '.')) ) #Добавляем корневую папку main для path append
+from modules.Nebesniy_svet.scr.Lightstar import download_xml_lightstar
+from modules.Nebesniy_svet.scr.Lightstar import send_api_batch_lightstar
 
-
-import download_xml_lightstar
-import send_api_batch_lightstar
 
 def main():
     download_xml_lightstar.main()

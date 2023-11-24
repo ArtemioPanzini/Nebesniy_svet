@@ -1,15 +1,12 @@
 import xml.etree.ElementTree as ET
 import requests
-import time as timesleep
+import time as timeless
 import json
-from datetime import datetime
 import threading
 import os
-import sys
 from datetime import datetime
-from datetime import date
-from datetime import time
 import config
+
 
 def read_txt_to_list(file_path):
     try:
@@ -23,7 +20,7 @@ def read_txt_to_list(file_path):
 
 
 def send_data_batch(prices_data, headers_oauth):
-    base_url = "https://api.partner.market.yandex.ru/businesses/79508170/offer-prices/updates"
+    base_url = "https://api.partner.market.yandex.ru/businesses/73939133/offer-prices/updates"
 
     # Разделяем список на батчи по 500 элементов и отправляем каждый батч
     batch_size = 500
@@ -58,10 +55,10 @@ def main():
     start_time = datetime.now()
 
     date_now = datetime.now().strftime('%Y-%m-%dT%H:%M:%S+03:00')
-    url = "https://isonex.ru/upload/stocks.xml"
+    url = "https://ftp.favourite-light.com/ForClients/export/offers.xml"
 
     response = requests.get(url)
-    timesleep.sleep(1)
+    timeless.sleep(1)
 
     # Создаем список для хранения данных о ценах
     prices_data = []
@@ -78,42 +75,28 @@ def main():
         xml_data = response.content
         root = ET.fromstring(xml_data)
 
-        current_time = datetime.now().time()
-
-        # Определяем временные интервалы
-        time_interval1_start = time(18, 55)
-        time_interval1_end = time(23, 59)
-        time_interval2_start = time(0, 0)
-        time_interval2_end = time(8, 25)
-
-        # Проверяем, находится ли текущее время в интервале 18:55 - 23:59 или 00:00 - 08:25
-        if (time_interval1_start <= current_time <= time_interval1_end) or (
-                time_interval2_start <= current_time <= time_interval2_end):
-            price_multiplier = 1
-        else:
-            # В других случаях множитель цены остается 1.0
-            price_multiplier = 1
-
-        now = date.today()
-        if now.weekday() in [5, 6]:
-            price_multiplier = 1
-
-        for item in root.findall(".//item"):
-            article = item.find("article").text
+        # Итерация по элементам <item>
+        for item in root.findall(".//Номенклатура"):
+            article = item.get("Имя")
             article = article.replace(" ", "-")
             if article not in list_undebug_incorrect:
                 continue
 
-            price_str = item.find("price").text
-            price_int = int(price_str)
-            price_multiplied = price_int * price_multiplier
+            price_rrc = item.find("ЦенаРРЦ").text if item.find("ЦенаРРЦ") is not None else None
+            price_int = int(price_rrc)
+            price_multiplied = price_int * 0.899
             price = round(price_multiplied)
 
-            stock = item.find("stock").text
+            stock = item.find("Остаток").text if item.find("Остаток") is not None else None
             if stock in ('1', '-1', '2', '3', '4'):
                 stock = 0
+            elif stock == 'более 10':
+                stock = 11
+            elif stock == 'более 50':
+                stock = 51
+            else:
+                stock = stock
 
-            # Создаем список данных о цене и добавляем его в список
             price_data = {
                 "offerId": f"{article}",
                 "price": {
@@ -121,6 +104,7 @@ def main():
                     "currencyId": "RUR"
                 }
             }
+
             stock_data = {
                 "sku": f"{article}",
                 "warehouseId": 1234240,
@@ -150,7 +134,7 @@ def main():
     end_time = datetime.now()
 
     finally_time = end_time - start_time
-    print(f"Sonex {finally_time}")
+    print(f"Favourite {finally_time}")
 
 
 if __name__ == "__main__":
