@@ -78,62 +78,63 @@ async def main():
     start_api_time = time.time()
 
     try:
-        print('ArteLampApiMain NS start')
+        print('ArteLampApiMain BL3 start')
         ArtelampMain.main()
         await message_handler.add_to_success_list('ArteLamp')
-        print(f'ArteLampApiMain success, ждём 60c')
+        print(f'ArteLampApiMain BL3 success, ждём 60c')
         time.sleep(60)
     except Exception as e:
-        print(f'В SonexMain NS ошибка: {e}')
+        print(f'В ScrappingMain BL3 ошибка: {e}')
         time.sleep(60)
 
     try:
         print('FavouriteMain NS start')
         FavouriteMain.main()
         await message_handler.add_to_success_list('Favourite')
-        print(f'Favourite success, ждём 58с')
+        print(f'Favourite success BL3 ждём 58с')
         time.sleep(58)
     except Exception as e:
-        print(f'В SonexMain NS ошибка: {e}')
+        print(f'В FavouriteMain BL3 ошибка: {e}')
         time.sleep(118)
 
     try:
-        print('MaytoniMain NS start')
+        print('MaytoniMain BL3 start')
         MaytoniMain.main()
         await message_handler.add_to_success_list('Maytoni')
         print(f'Maytoni success, ждём 60c')
         time.sleep(60)
     except Exception as e:
-        print(f'В SonexMain NS ошибка: {e}')
+        print(f'В MaytoniMain BL3 ошибка: {e}')
         time.sleep(120)
 
     try:
-        print('LightstarMain NS start')
+        print('LightstarMain BL3 start')
         LightstarMain.main()
         await message_handler.add_to_success_list('LightStar')
         print(f'LightStar success, ждём 60c')
         time.sleep(60)
     except Exception as e:
-        print(f'В SonexMain NS ошибка: {e}')
+        print(f'В LightStar BL3 ошибка: {e}')
         time.sleep(120)
 
     try:
-        print('StilfortMain NS start')
+        print('StilfortMain BL3 start')
         StilfortMain.main()
         await message_handler.add_to_success_list('Stilfort')
         print(f'StilfortApiMain success, ждём 60c')
         time.sleep(60)
     except Exception as e:
-        print(f'В SonexMain NS ошибка: {e}')
+        print(e)
+        print(f'В StilfortMain BL3 ошибка: {e}')
         time.sleep(120)
 
     try:
-        print('SonexMain NS start')
+        print('SonexMain BL3 start')
         SonexMain.main()
         await message_handler.add_to_success_list('Sonex')
         print(f"SonexMain success, ничего не ждём")
     except Exception as e:
-        print(f'В SonexMain NS ошибка: {e}')
+        print(f'В SonexMain BL3 ошибка: {e}')
 
     time_interval1_start = time_now(9, 45)
     time_interval1_end = time_now(10, 00)
